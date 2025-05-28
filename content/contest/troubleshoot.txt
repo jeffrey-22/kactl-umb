@@ -1,8 +1,7 @@
 Pre-submit:
 Write a few simple test cases if sample is not enough.
 Are time limits close? If so, generate max cases.
-Is the memory usage fine?
-Could anything overflow?
+Is the memory usage fine? Could anything overflow?
 Make sure to submit the right file.
 
 Wrong answer:
@@ -17,6 +16,7 @@ Any overflows?
 Confusing N and M, i and j, etc.?
 Are you sure your algorithm works?
 What special cases have you not thought of?
+Check if you passed the sample cases.
 Are you sure the STL functions you use work as you think?
 Add some assertions, maybe resubmit.
 Create some testcases to run your algorithm on.
