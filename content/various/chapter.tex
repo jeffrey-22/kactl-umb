@@ -11,8 +11,39 @@
 	\kactlimport{FastKnapsack.h}
 
 \section{Dynamic programming}
-	\kactlimport{KnuthDP.h}
-	\kactlimport{DivideAndConquerDP.h}
+	% \kactlimport{KnuthDP.h}
+	% \kactlimport{DivideAndConquerDP.h}
+	\subsection{Quadrangle Inequality}
+		Quadrangle Inequality: some cost function $C$ satisfies for all $l \le r$: $C(l,r+1)-C(l, r) \ge  C(l+1,r+1) - C(l+1,r)$.
+		Alternatively $C(a,c) + C(b,d) \le C(a,d) + C(b,c)$ for all $a \le b \le c \le d$. Still holds for $C'(l,r)=C(l,r)+F(l)+G(r)$.
+		Example: sub-matrix sum of $(l, l)$ to $(r, r)$. 
+		Define $\text{opt}(r)=$(leftmost or rightmost)$l(< r)$ that minimize $C(l,r)$, then $\text{opt}$ is non-decreasing.
+		$\text{opt}$ is also the decision point of DP transitions. Consider writing assertions of monotonicity of $\text{opt}$ 
+		if inequality is difficult to prove.
+		This gives a sufficient condition for applying Divide and Conquer DP, Knuth DP or 1D1D DP.
+		\begin{itemize}
+			\item Divide and Conquer DP if $\text{opt}(i)$ can be computed out of order. Compute $\text{opt}(\frac{n}{2})$ first, 
+			then compute $\text{opt}(\frac{n}{4})$ and $\text{opt}(\frac{3n}{4})$, then keep splitting. Takes $O(n \log n)$.
+			\item Knuth DP for interval DP. If additionally $C(b,c)\le C(a,d)$ holds for all $a \le b \le c \le d$, 
+			for $\text{opt}(l,r)=k(\in [l,r))$ that minimize $\text{dp}(l,r)=\text{dp}(l,k)+\text{dp}(k+1,r)+C(l,r)$, then $\text{opt}(l,r-1)\le \text{opt}(l,r) \le \text{opt}(l+1,r)$.
+			Solve intervals in increasing order of length and only search in that range intersecting $[l,r)$. Takes $O(n^2)$.
+			Consider also: LineContainer, monotone queues, ternary search.
+			\item 1D1D DP, if for a fixed value $x$, $\text{opt}_x(r)=l(\le x)$ that minimize $C(l,r)$, then $\text{opt}_x$ is still non-decreasing.
+			Iterate over $x$, starting with all $\text{opt}_x(r)=1$.
+			Calculate $\text{dp}(x)$, binary search for a suffix to update $\text{opt}_x(r)=x$ checking if $x$ is better than $\text{opt}_{x-1}(r)$, 
+			everything else remains $\text{opt}_x(r)=\text{opt}_{x-1}(r)$.
+			To implement, keep a stack of (suffix position $y$, its current $\text{opt}$ value).
+			For each new $x$, after calculating $\text{dp}(x)$,
+			keep popping the stack if $x<y$ and $x$ is better than old $\text{opt}$ value at position $y$. 
+			Binary search for new suffix position in $[y+1,n]$, pushing it into the stack if found. Takes $O(n \log n)$.
+		\end{itemize}
+	% TODO: subset DP
+	% TODO: slope trick
+	% TODO: knapsack, subset sum and (max, +) convolution
+	% TODO: Alien's trick
+	% TODO: Dynamic Submask Count dp
+	% TODO: O(nk) subtree dp
+
 
 \section{Debugging tricks}
 	\begin{itemize}
