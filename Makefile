@@ -17,6 +17,8 @@ help:
 	@echo ""
 	@echo "For more information see the file 'doc/README'"
 
+.DEFAULT_GOAL := fast
+
 fast: | build
 	$(LATEXCMD) content/kactl.tex </dev/null
 	cp build/kactl.pdf kactl.pdf
