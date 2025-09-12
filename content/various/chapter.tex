@@ -39,6 +39,7 @@
 			use them to binary search for new suffix position in $[x+1,n+1]$, 
 			pushing it into the stack if found (If searched to $n+1$ skip this $x$). Takes $O(n \log n)$.
 		\end{itemize}
+	\vspace{2cm} % Trying this to fix text overlapping
 	\subsection{Sum over Subset}
 		Keep set $S(\text{mask}, i)$ as sum of (subset of first $i$ bits of $\text{mask}$ + remaining bits of $\text{mask}$).
 		Loop over $i$ first, then $\text{mask}$. If $\text{mask}$'s $i^{th}$ bit is $1$, 
