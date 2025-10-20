@@ -7,6 +7,7 @@
  * Time: O(N \log^2 N)
  * Status: not tested
  */
+int n = 200000;
 struct SegTreeBeats {
 	struct Node {
 		ll sum,   // Sum tag
@@ -18,9 +19,9 @@ struct SegTreeBeats {
 		minc,  // Min value count
 		lazy;  // Lazy tag
 	};
-	vector<Node> T; const static int n = 200000 + 10;
-	const ll inf = 4e18;
-	SegTreeBeats() : T(4*n+10) {}
+	vector<Node> T;
+	const ll inf = 9e18;
+	SegTreeBeats(int n) : T(4*n+10) {build();}
 
 	void pushup(int t) {
 		int L = (t << 1), R = (t << 1 | 1);
@@ -61,7 +62,7 @@ struct SegTreeBeats {
 	}
 
 	void pushadd(int t, int tl, int tr, ll v) {
-		if (v == 0) { return; }
+		if (v == 0) return;
 		T[t].sum += v * (tr - tl + 1);
 		T[t].max1 += v;
 		if (T[t].max2 != -inf) T[t].max2 += v;
@@ -116,7 +117,7 @@ struct SegTreeBeats {
 	void build(int t = 1, int tl = 0, int tr = n) {
 		T[t].lazy = 0;
 		if (tl == tr) {
-			T[t].sum = T[t].max1 = T[t].min1 = 0;
+			T[t].sum = T[t].max1 = T[t].min1 = 0; // or a[tl]
 			T[t].maxc = T[t].minc = 1;
 			T[t].max2 = -inf;
 			T[t].min2 = inf;
@@ -129,7 +130,7 @@ struct SegTreeBeats {
 	}
 
 	void update_add(int l, int r, ll v, int t = 1, int tl = 0, int tr = n) {
-		if (r < tl || tr < l) { return; }
+		if (r < tl || tr < l) return;
 		if (l <= tl && tr <= r) {
 			pushadd(t, tl, tr, v);
 			return;
@@ -142,7 +143,7 @@ struct SegTreeBeats {
 	}
 
 	void update_chmin(int l, int r, ll v, int t = 1, int tl = 0, int tr = n) {
-		if (r < tl || tr < l || v >= T[t].max1) { return; }
+		if (r < tl || tr < l || v >= T[t].max1) return;
 		if (l <= tl && tr <= r && v > T[t].max2) {
 			pushmax(t, v, tl == tr);
 			return;
@@ -155,7 +156,7 @@ struct SegTreeBeats {
 	}
 
 	void update_chmax(int l, int r, ll v, int t = 1, int tl = 0, int tr = n) {
-		if (r < tl || tr < l || v <= T[t].min1) { return; }
+		if (r < tl || tr < l || v <= T[t].min1) return;
 		if (l <= tl && tr <= r && v < T[t].min2) {
 			pushmin(t, v, tl == tr);
 			return;
