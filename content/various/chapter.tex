@@ -50,7 +50,7 @@
 	% TODO: Alien's trick
 	% TODO: Dynamic Submask Count dp
 	% TODO: O(nk) subtree dp
-
+\vspace{10px}
 
 \section{Debugging tricks}
 	\begin{itemize}
@@ -58,6 +58,8 @@
 			Similarly one can catch SIGABRT (assertion failures) and SIGFPE (zero divisions).
 			\verb@_GLIBCXX_DEBUG@ failures generate SIGABRT (or SIGSEGV on gcc 5.4.0 apparently).
 	\end{itemize}
+	
+\vspace{10px}
 
 \section{Optimization tricks}
 	\verb@__builtin_ia32_ldmxcsr(40896);@ disables denormals (which make floats 20x slower near their minimum value). Needs 64-bit OS.
