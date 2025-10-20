@@ -11,30 +11,66 @@
 	\kactlimport{FastKnapsack.h}
 
 \section{Dynamic programming}
-	\kactlimport{KnuthDP.h}
-	\kactlimport{DivideAndConquerDP.h}
+	% \kactlimport{KnuthDP.h}
+	% \kactlimport{DivideAndConquerDP.h}
+	\subsection{Quadrangle Inequality}
+		Quadrangle Inequality: some cost function $C$ satisfies for all $l < r$: $C(l,r+1)-C(l, r) \ge  C(l+1,r+1) - C(l+1,r)$.
+		Alternatively $C(a,c) + C(b,d) \le C(a,d) + C(b,c)$ for all $a \le b \le c \le d$. Still holds for $C'(l,r)=C(l,r)+F(l)+G(r)$.
+		Example: sub-matrix sum of $(l, l)$ to $(r, r)$. 
+		Define $\text{opt}(r)=$(leftmost or rightmost)$l(< r)$ that minimize $C(l,r)$, then $\text{opt}$ is non-decreasing.
+		$\text{opt}$ is also the decision point of DP transitions. Consider writing assertions of monotonicity of $\text{opt}$ 
+		if inequality is difficult to prove.
+		This gives a sufficient condition for applying Divide and Conquer DP, Knuth DP or 1D1D DP.
+		\begin{itemize}
+			\item Divide and Conquer DP if $\text{opt}(i)$ can be computed out of order. Compute $\text{opt}(\frac{n}{2})$ first, 
+			then compute $\text{opt}(\frac{n}{4})$ and $\text{opt}(\frac{3n}{4})$, then keep splitting. Takes $O(n \log n)$.
+			\item Knuth DP for interval DP. If additionally $C(b,c)\le C(a,d)$ holds for all $a \le b \le c \le d$, 
+			for $\text{opt}(l,r)=k(\in [l,r))$ that minimize $\text{dp}(l,r)=\text{dp}(l,k)+\text{dp}(k+1,r)+C(l,r)$, then $\text{opt}(l,r-1)\le \text{opt}(l,r) \le \text{opt}(l+1,r)$.
+			Solve intervals in increasing order of length and only search in that range intersecting $[l,r)$. Takes $O(n^2)$.
+			Consider also: LineContainer, monotone queues, ternary search.
+			\item 1D1D DP, if for a fixed value $x$, $\text{opt}_x(r)=l(\le x)$ that minimize $C(l,r)$, then $\text{opt}_x$ is still non-decreasing.
+			Iterate over $x$, starting with all $\text{opt}_x(r)=0$.
+			Calculate $\text{dp}(x)$, binary search for a suffix to update $\text{opt}_x(r)=x$ checking if $x$ is better than $\text{opt}_{x-1}(r)$, 
+			everything else remains $\text{opt}_x(r)=\text{opt}_{x-1}(r)$.
+			To implement, keep a stack of (suffix position $y$, its current $\text{opt}$ value). Start with inserting $(1,0)$.
+			For each new $x$, after calculating $\text{dp}(x)$ using \verb@--lower_bound(all(stack), make_pair(x, inf))@ on the stack,
+			keep popping the stack if $x<y$ and $x$ is better than old $\text{opt}$ value at position $y$. 
+			Keep the last stack top element $(y,\text{oldopt})$, 
+			use them to binary search for new suffix position in $[x+1,n+1]$, 
+			pushing it into the stack if found (If searched to $n+1$ skip this $x$). Takes $O(n \log n)$.
+		\end{itemize}
+	\vspace{2cm} % Trying this to fix text overlapping
+	\subsection{Sum over Subset}
+		Keep set $S(\text{mask}, i)$ as sum of (subset of first $i$ bits of $\text{mask}$ + remaining bits of $\text{mask}$).
+		Loop over $i$ first, then $\text{mask}$. If $\text{mask}$'s $i^{th}$ bit is $1$, 
+		additionally include $S(\text{mask} \oplus 2^i, i-1)$.
+		Get rid of the second dimension for memory optimization.
+	% TODO: slope trick
+	% TODO: knapsack, subset sum and (max, +) convolution
+	% TODO: Alien's trick
+	% TODO: Dynamic Submask Count dp
+	% TODO: O(nk) subtree dp
+
 
 \section{Debugging tricks}
 	\begin{itemize}
 		\item \verb@signal(SIGSEGV, [](int) { _Exit(0); });@ converts segfaults into Wrong Answers.
 			Similarly one can catch SIGABRT (assertion failures) and SIGFPE (zero divisions).
 			\verb@_GLIBCXX_DEBUG@ failures generate SIGABRT (or SIGSEGV on gcc 5.4.0 apparently).
-		\item \verb@feenableexcept(29);@ kills the program on NaNs (\texttt 1), 0-divs (\texttt 4), infinities (\texttt 8) and denormals (\texttt{16}).
 	\end{itemize}
 
 \section{Optimization tricks}
-	\verb@__builtin_ia32_ldmxcsr(40896);@ disables denormals (which make floats 20x slower near their minimum value).
+	\verb@__builtin_ia32_ldmxcsr(40896);@ disables denormals (which make floats 20x slower near their minimum value). Needs 64-bit OS.
 	\subsection{Bit hacks}
 		\begin{itemize}
 			\item \verb@x & -x@ is the least bit in \texttt{x}.
 			\item \verb@for (int x = m; x; ) { --x &= m; ... }@ loops over all subset masks of \texttt{m} (except \texttt{m} itself).
 			\item \verb@c = x&-x, r = x+c; (((r^x) >> 2)/c) | r@ is the next number after \texttt{x} with the same number of bits set.
-			\item \verb@rep(b,0,K) rep(i,0,(1 << K))@ \\ \verb@  if (i & 1 << b) D[i] += D[i^(1 << b)];@ computes all sums of subsets.
 		\end{itemize}
 	\subsection{Pragmas}
 		\begin{itemize}
 			\item \lstinline{#pragma GCC optimize ("Ofast")} will make GCC auto-vectorize loops and optimizes floating points better.
-			\item \lstinline{#pragma GCC target ("avx2")} can double performance of vectorized code, but causes crashes on old machines.
+			\item \lstinline{#pragma GCC target ("avx2")} can double performance of vectorized code, but causes crashes on old machines. Consider putting loops over arrays in a separate method.
 			\item \lstinline{#pragma GCC optimize ("trapv")} kills the program on integer overflows (but is really slow).
 		\end{itemize}
 	\kactlimport{FastMod.h}

@@ -34,11 +34,21 @@
 		\end{tabular}
 		\end{center}
 
+	\subsection{Binomials}
+		\kactlimport{multinomial.h}
+
+	\textbf{Treat} $\binom{<m}{m} = 0$ \textbf{for following theorems.}
 	\subsection{Lucas' Theorem}
 		Let $n,m$ be non-negative integers and $p$ a prime. Write $n=n_kp^k+...+n_1p+n_0$ and $m=m_kp^k+...+m_1p+m_0$. Then $\binom{n}{m} \equiv \prod_{i=0}^k\binom{n_i}{m_i} \pmod{p}$.
 
-	\subsection{Binomials}
-		\kactlimport{multinomial.h}
+	\subsection{Hockey-stick Identity}
+		\[ \sum_{n=a}^b \binom{n}{m} = \binom{b+1}{m+1} - \binom{a}{m+1} \]
+
+	\subsection{Every k-th binomial}
+		In the expansion of $(1+x)^n$, plug in various values (including complex values) of $x$ and cancel the terms out by summation.
+
+	\subsection{Vandermonde's Identity}
+		\[ \sum_{k=0}^r \binom{m}{k}\binom{n}{r-k} = \binom{n+m}{r} \]
 
 \section{General purpose numbers}
 	\subsection{Bernoulli numbers}
