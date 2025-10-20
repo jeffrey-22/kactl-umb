@@ -29,15 +29,19 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
-        name: kactl-pdf
-        path: kactl.pdf
+        name: pdf-files
+        path: |
+          kactl.pdf
+          test-session.pdf
 
     - name: Create GitHub Release
       uses: softprops/action-gh-release@v2
       with:
         name: Release ${{ steps.tag.outputs.tag }}
         tag_name: ${{ steps.tag.outputs.tag }}
-        files: kactl.pdf
+        files: |
+          kactl.pdf
+          test-session.pdf
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
