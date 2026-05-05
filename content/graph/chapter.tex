@@ -6,6 +6,18 @@
 	\kactlimport{TopoSort.h}
 
 \section{Network flow}
+	\subsection{Edge lower bounds}
+		Say we require $d(e) \leq f(e) \leq c(e)$ for every edge $e$. 
+		Add super source and sink $s'$ and $t'$. 
+		Replace edge $u \to v$ with: 
+		edge $u \to v$ with capacity $c(u \to v) - d(u \to v)$, 
+		edge $s' \to v$ with capacity $d(u \to v)$, 
+		and edge $u \to t'$ with capacity $d(u \to v)$.
+		Add $t\to s$ with infinite capacity.
+		Merge multiple edges with the same total capacity.
+		Calc max flow on $(s', t')$. Feasible iff $(s', t')$ has flow at least $\sum d(e)$.
+		Add $d(e)$ back to get original flow.
+		\vspace{20px}
 	\kactlimport{PushRelabel.h}
 	\kactlimport{MinCostMaxFlow.h}
 	\kactlimport{EdmondsKarp.h}

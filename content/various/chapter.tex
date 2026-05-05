@@ -37,7 +37,7 @@
 			keep popping the stack if $x<y$ and $x$ is better than old $\text{opt}$ value at position $y$. 
 			Keep the last stack top element $(y,\text{oldopt})$, 
 			use them to binary search for new suffix position in $[x+1,n+1]$, 
-			pushing it into the stack if found (If searched to $n+1$ skip this $x$). Takes $O(n \log n)$.
+			pushing it into the stack if found (If searched to $n+1$ skip this $x$). Takes $O(n \log n)$. % TODO: rewrite this BS
 		\end{itemize}
 	\vspace{2cm} % Trying this to fix text overlapping
 	\subsection{Sum over Subset}

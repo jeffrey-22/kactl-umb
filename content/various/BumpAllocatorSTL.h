@@ -10,7 +10,7 @@
 #pragma once
 
 char buf[450 << 20] alignas(16);
-size_t buf_ind = sizeof buf;
+size_t buf_ind = sizeof buf; // reset
 
 template<class T> struct small {
 	typedef T value_type;
