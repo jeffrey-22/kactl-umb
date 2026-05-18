@@ -27,12 +27,16 @@
 		Loop over $i$ first, then $\text{mask}$. If $\text{mask}$'s $i^{th}$ bit is $1$, 
 		additionally include $S(\text{mask} \oplus 2^i, i-1)$.
 		Get rid of the second dimension for memory optimization.
-	% TODO: slope trick
-	% TODO: knapsack, subset sum and (max, +) convolution
-	% TODO: Alien's trick
-	% TODO: Dynamic Submask Count dp
-	% TODO: O(nk) subtree dp
-\vspace{10px}
+	\subsection{Slope trick}
+		For 2D DP $f_i(x)$ that transitions from $f_{i-1}(y)$ that is convex, consider the slopes $g_i(x)=f_i(x+1)-f_i(x)$, they must be non-decreasing. Maintain slope changing points with some data structure. (Example: maintain set $v$ such that $v_{t}=\min_{g_i(p)=t} p$.)
+	\subsection{Subset sum}
+		To find if a subset sum of weights can be equal to $k$, group items into form $(w_i, occ_i)$, and decompose into powers of $2$. So $(w_i,12)=\{w_i,2w_i,4w_i,5w_i\}$. This is $O(\frac{C^{1.5}}{32})$.
+	\subsection{(min, +) convolution}
+		Find $C_i = \max_{x+y=i} (A_x + B_y)$. If both $A$ and $B$ are convex, then consider the union of the slopes of $A$ and $B$, sort them to get the slopes of $C$. If only $B$ is convex, define $i$-chain as the line segment with points $\{(i+1,A_i+B_1),(i+2,A_i+B_2),(i+3,Ai+B3),\cdots \}$. 2 chains only intersect at a point, so use Li Chao tree to store these lines.
+	\subsection{$O(nk)$ tree DP}
+		If design DP as $dp[u][i+j] \leftarrow f(dp[v][i], dp[w][j])$ for all pairs of children $(v, w)$, with length of $dp[u] \le k$, this is $O(nk)$.
+	\subsection{Alien's Trick}
+		Let the max score of using something $x$ times be $f(x)$, and we need to find $f(K)$ for a fixed $K$. If $f(x)$ is concave or convex, then $f(x) - \lambda x$ will increase, stay the same, and decrease. Let $v(\lambda)$ be max of $f(x)-\lambda x$ (find by DP with $\lambda$ as penalty), and $c(\lambda)$ the rightmost $x$ that maximizes $f(x)-\lambda x$. Binary search for highest $\lambda_0$ such that $c(\lambda_0) \ge K$, then answer is $v(\lambda_0) + \lambda_0 K$.
 
 \section{Debugging tricks}
 	\begin{itemize}
@@ -40,8 +44,7 @@
 			Similarly one can catch SIGABRT (assertion failures) and SIGFPE (zero divisions).
 			\verb@_GLIBCXX_DEBUG@ failures generate SIGABRT (or SIGSEGV on gcc 5.4.0 apparently).
 	\end{itemize}
-	
-\vspace{10px}
+	\kactlimport[-l raw]{stresser.sh}
 
 \section{Optimization tricks}
 	\verb@__builtin_ia32_ldmxcsr(40896);@ disables denormals (which make floats 20x slower near their minimum value). Needs 64-bit OS.
@@ -64,4 +67,4 @@
 	\kactlimport{SmallPtr.h}
 	\kactlimport{BumpAllocatorSTL.h}
 	% \kactlimport{Unrolling.h}
-	\kactlimport{SIMD.h}
+	% \kactlimport{SIMD.h}
