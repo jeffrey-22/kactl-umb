@@ -3,7 +3,6 @@ Write a few simple test cases if sample is not enough.
 Are time limits close? If so, generate max cases.
 Is the memory usage fine? Could anything overflow?
 Make sure to submit the right file.
-
 Wrong answer:
 Print your solution! Print debug output, as well.
 Are you clearing all data structures between test cases?
@@ -11,15 +10,15 @@ Can your algorithm handle the whole range of input?
 Read the full problem statement again.
 Do you handle all corner cases correctly?
 Have you understood the problem correctly?
-Any uninitialized variables?
+Any uninitialized variables? (-Wall)
 Overflows? (check with -fsanitize=address,undefined -g -O1)
 For vector overflows add #define _GLIBCXX_SANITIZE_VECTOR 1
 Confusing N and M, i and j, etc.?
 Are you sure your algorithm works? Special cases?
 Check if you passed the sample cases.
 Are you sure the STL functions you use work as you think?
-Add some assertions, maybe resubmit.
-Create some testcases to run your algorithm on.
+Add assertions, resubmit. (maybe not if interactive prob)
+Create some testcases to run your algorithm on. Stress test.
 Go through this list again.
 Explain your algorithm to a teammate.
 Ask the teammate to look at your code.
@@ -29,8 +28,7 @@ Rewrite your solution from the start or let a teammate do it.
 
 Runtime error:
 Have you tested all corner cases locally?
-Any uninitialized variables?
-Are you reading or writing outside the range of any vector?
+Any uninitialized variables? Overflows? (see above)
 Any assertions that might fail?
 Any possible division by 0? (mod 0 for example)
 Any possible infinite recursion?

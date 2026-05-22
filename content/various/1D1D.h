@@ -12,7 +12,7 @@
 vector<ll> dp(N+1); dp[0] = 0;
 vector<pair<int, int> > v = {{0, 0}};
 rep(x,1,N+1) { // find dp[x]
-	int k = (--lower_bound(v.begin(), v.end(), make_pair(x+1, 0)))->second;
+	int k = (--lower_bound(all(v), make_pair(x+1, 0)))->second;
 	dp[x] = dp[k] + w(k, x);
 	for (int i = sz(v) - 1; i >= 0; i--) {
 		auto [y, oldk] = v[i];

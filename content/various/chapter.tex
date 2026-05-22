@@ -12,13 +12,10 @@
 
 \section{Dynamic programming}
 	\subsection{Quadrangle Inequality}
-		Quadrangle Inequality: some cost function $C$ satisfies for all $l < r$: $C(l,r+1)-C(l, r) \ge  C(l+1,r+1) - C(l+1,r)$.
-		Alternatively $C(a,c) + C(b,d) \le C(a,d) + C(b,c)$ for all $a \le b \le c \le d$. Still holds for $C'(l,r)=C(l,r)+F(l)+G(r)$.
-		Example: sub-matrix sum of $(l, l)$ to $(r, r)$. 
+		Quadrangle Inequality: cost function $C$ satisfies for all $l < r$: $C(l,r+1)-C(l, r) \ge C(l+1,r+1) - C(l+1,r)$.
+		Alternatively $C(a,c) + C(b,d) \le C(a,d) + C(b,c)$ for all $a \le b \le c \le d$.
 		Define $\text{opt}(r)=$(leftmost or rightmost)$l(< r)$ that minimize $C(l,r)$, then $\text{opt}$ is non-decreasing.
-		$\text{opt}$ is also the decision point of DP transitions. Consider writing assertions of monotonicity of $\text{opt}$ 
-		if inequality is difficult to prove.
-		This gives a sufficient condition for applying Divide and Conquer DP, Knuth DP or 1D1D DP.
+		Useful for decision points of DP transitions. Consider writing assertions of monotonicity of $\text{opt}$.
 	\kactlimport{KnuthDP.h}
 	\kactlimport{DivideAndConquerDP.h}
 	\kactlimport{1D1D.h}
@@ -44,7 +41,7 @@
 			Similarly one can catch SIGABRT (assertion failures) and SIGFPE (zero divisions).
 			\verb@_GLIBCXX_DEBUG@ failures generate SIGABRT (or SIGSEGV on gcc 5.4.0 apparently).
 	\end{itemize}
-	\kactlimport[-l raw]{stresser.sh}
+	\kactlimport[-l raw]{stress.sh}
 
 \section{Optimization tricks}
 	\verb@__builtin_ia32_ldmxcsr(40896);@ disables denormals (which make floats 20x slower near their minimum value). Needs 64-bit OS.
@@ -67,4 +64,4 @@
 	\kactlimport{SmallPtr.h}
 	\kactlimport{BumpAllocatorSTL.h}
 	% \kactlimport{Unrolling.h}
-	% \kactlimport{SIMD.h}
+	\kactlimport{SIMD.h}

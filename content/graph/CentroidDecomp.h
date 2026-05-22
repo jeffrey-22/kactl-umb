@@ -13,7 +13,6 @@
 vector<vector<int>> adj;
 vector<bool> removed;
 vector<int> sz;
-
 int calcSize(int u, int p = -1) {
 	sz[u] = 1;
 	for (auto v : adj[u]) {
@@ -31,9 +30,7 @@ int getCentroid(int u, int tot, int p = -1) {
 }
 void centroidDecomp(int u = 0) {
 	u = getCentroid(u, calcSize(u));
-
 	// Solve with u as centroid
-
 	removed[u] = 1;
 	for (auto v : adj[u]) {
 		if (removed[v]) continue;
