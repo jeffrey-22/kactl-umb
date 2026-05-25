@@ -9,8 +9,8 @@
  */
 struct SegTreeBeats {
 	struct Node {
-		ll sum, max1, max2, maxc, // Sum, Max, Second Max, Max value cnt
-		min1, min2, minc, lazy // Min, Second Min, Min value cnt, Lazy tag
+		ll sum, max1, max2, // Sum, Max, Second Max
+		maxc, min1, min2, minc, lazy; // Max val cnt, Min, Lazy tag
 	};
 	vector<Node> T; 
 	inline static int a = 0, b = 0; // all instances share this index range [a, b]. If this is not desirable, also remove all the default tl = a, tr = b
