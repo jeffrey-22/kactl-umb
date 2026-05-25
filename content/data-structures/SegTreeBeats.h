@@ -7,17 +7,15 @@
  * Time: O(N \log^2 N)
  * Status: not tested
  */
-int n = 200000;
 struct SegTreeBeats {
 	struct Node {
-		ll sum, max1, max2,  // Sum, Max, Second Max
-		maxc,  // Max value count
-		min1, min2 // Min, Second Min
-		minc, lazy;  // Min value count, Lazy tag
+		ll sum, max1, max2, maxc, // Sum, Max, Second Max, Max value cnt
+		min1, min2, minc, lazy // Min, Second Min, Min value cnt, Lazy tag
 	};
-	vector<Node> T;
+	vector<Node> T; 
+	inline static int a = 0, b = 0; // all instances share this index range [a, b]. If this is not desirable, also remove all the default tl = a, tr = b
 	const ll inf = 9e18;
-	SegTreeBeats(int n) : T(4*n+10) {build();}
+	SegTreeBeats(int n) : T(4*n+10) {a = 1, b = n; build();}
 	void pushup(int t) {
 		int L = (t << 1), R = (t << 1 | 1);
 		T[t].sum = T[L].sum + T[R].sum; // sum
@@ -94,10 +92,10 @@ struct SegTreeBeats {
 		pushmin(L, T[t].min1, tl == tm); // min
 		pushmin(R, T[t].min1, tm + 1 == tr);
 	}
-	void build(int t = 1, int tl = 0, int tr = n) {
+	void build(int t = 1, int tl = a, int tr = b) {
 		T[t].lazy = 0;
 		if (tl == tr) {
-			T[t].sum = T[t].max1 = T[t].min1 = 0; // or a[tl]
+			T[t].sum = T[t].max1 = T[t].min1 = 0; // or arr[tl]
 			T[t].maxc = T[t].minc = 1;
 			T[t].max2 = -inf;
 			T[t].min2 = inf;
@@ -108,7 +106,7 @@ struct SegTreeBeats {
 		build(t << 1 | 1, tm + 1, tr);
 		pushup(t);
 	}
-	void update_add(int l, int r, ll v, int t = 1, int tl = 0, int tr = n) {
+	void update_add(int l, int r, ll v, int t = 1, int tl = a, int tr = b) {
 		if (r < tl || tr < l) return;
 		if (l <= tl && tr <= r) {
 			pushadd(t, tl, tr, v);
@@ -120,7 +118,7 @@ struct SegTreeBeats {
 		update_add(l, r, v, t << 1 | 1, tm + 1, tr);
 		pushup(t);
 	}
-	void update_chmin(int l, int r, ll v, int t = 1, int tl = 0, int tr = n) {
+	void update_chmin(int l, int r, ll v, int t = 1, int tl = a, int tr = b) {
 		if (r < tl || tr < l || v >= T[t].max1) return;
 		if (l <= tl && tr <= r && v > T[t].max2) {
 			pushmax(t, v, tl == tr);
@@ -132,7 +130,7 @@ struct SegTreeBeats {
 		update_chmin(l, r, v, t << 1 | 1, tm + 1, tr);
 		pushup(t);
 	}
-	void update_chmax(int l, int r, ll v, int t = 1, int tl = 0, int tr = n) {
+	void update_chmax(int l, int r, ll v, int t = 1, int tl = a, int tr = b) {
 		if (r < tl || tr < l || v <= T[t].min1) return;
 		if (l <= tl && tr <= r && v < T[t].min2) {
 			pushmin(t, v, tl == tr);
@@ -144,7 +142,7 @@ struct SegTreeBeats {
 		update_chmax(l, r, v, t << 1 | 1, tm + 1, tr);
 		pushup(t);
 	}
-	ll query_sum(int l, int r, int t = 1, int tl = 0, int tr = n) {
+	ll query_sum(int l, int r, int t = 1, int tl = a, int tr = b) {
 		if (r < tl || tr < l) { return 0; }
 		if (l <= tl && tr <= r) { return T[t].sum; }
 		pushdown(t, tl, tr);
