@@ -14,7 +14,7 @@ struct Dinic {
 		int to, rev;
 		ll c, oc;
 		ll flow() { return max(oc - c, 0LL); } 
-		// if you need flows, have addEdge return {a, sz(adj[a])}
+		// if need flows, let addEdge return {a, sz(adj[a]) - 1}
 	};
 	vi lvl, ptr, q;
 	vector<vector<Edge>> adj;

@@ -14,7 +14,7 @@ struct PushRelabel {
 	struct Edge {
 		int dest, back;
 		ll f, c;
-		// have addEdge return {s, sz(g[s])} and read f for flow
+		// have addEdge return {s, sz(g[s])-1} and read f for flow
 	};
 	vector<vector<Edge>> g;
 	vector<ll> ec;

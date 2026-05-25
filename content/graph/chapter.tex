@@ -7,21 +7,34 @@
 
 \section{Network flow}
 	\subsection{Edge lower bounds}
-		Say we require $d(e) \leq f(e) \leq c(e)$ for every edge $e$. 
-		Add super source and sink $s'$ and $t'$. 
-		Replace edge $u \to v$ with: 
-		edge $u \to v$ with capacity $c(u \to v) - d(u \to v)$, 
-		edge $s' \to v$ with capacity $d(u \to v)$, 
-		and edge $u \to t'$ with capacity $d(u \to v)$.
-		Add $t\to s$ with infinite capacity.
-		Merge multiple edges with the same total capacity.
-		Calc max flow on $(s', t')$. Feasible iff $(s', t')$ has flow at least $\sum d(e)$.
-		Add $d(e)$ back to get original flow.
-		\vspace{4px}
+		\begin{itemize}
+		\item Say we require $L(e) \leq f(e) \leq R(e)$ for every edge $e$. 
+		\item If $L(e)$ can be negative:
+			\begin{itemize}
+				\item If $R(e) < 0$, reverse the edge, and flip the signs.
+				\item If $L(e) < 0 \le R(e)$, set $L(e)$ back to $0$, but add a reverse edge with capacity $-L(e)$.
+			\end{itemize}
+		\item Add super source and sink $s'$ and $t'$. 
+		\item Replace edge $a \to b$ with three edges:
+			\begin{itemize}
+				\item Same edge with capacity $R(e) - L(e)$.
+				\item Add edge $s' \to b$ with capacity $L(e)$.
+				\item Add edge $a \to t'$ with capacity $L(e)$.
+			\end{itemize}
+		\item Add (original sink to source) $t\to s$ with infinite capacity.
+		\item Feasible iff $(s', t')$ has max flow equal to $\sum L(e)$.
+		\item Minimal flow of original network: binary search on the capactiy of $t\to s$ (instead of infinity). 
+		This edge captures the max allowed total flow of the original network.
+		\item After finishing feasibility run, 
+		run max flow again \textbf{over} the remainder of the modified graph, from original source to sink for original max flow value. 
+		Add $L(e)$ to each edge for the exact flow of each edge. 
+		Use Dinic or MCMF instead of PushRelabel as it allows re-running.
+		\end{itemize}
+		\vspace{1px}
 	\kactlimport{PushRelabel.h}
 	\kactlimport{MinCostMaxFlow.h}
-	\kactlimport{EdmondsKarp.h}
-	% \kactlimport{Dinic.h}
+	% \kactlimport{EdmondsKarp.h}
+	\kactlimport{Dinic.h}
 	\kactlimport{MinCut.h}
 	\kactlimport{GlobalMinCut.h}
 	% \kactlimport{GomoryHu.h}
