@@ -10,7 +10,7 @@
 int n = 200000;
 struct SegTreeBeats {
 	struct Node {
-		ll sum, max1, max2  // Sum, Max, Second Max
+		ll sum, max1, max2,  // Sum, Max, Second Max
 		maxc,  // Max value count
 		min1, min2 // Min, Second Min
 		minc, lazy;  // Min value count, Lazy tag

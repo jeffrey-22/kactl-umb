@@ -9,27 +9,33 @@
  */
 #pragma once
 
-vector<ll> dp(N+1); dp[0] = 0;
-vector<pair<int, int> > v = {{0, 0}};
-rep(x,1,N+1) { // find dp[x]
-	int k = (--lower_bound(all(v), make_pair(x+1, 0)))->second;
-	dp[x] = dp[k] + w(k, x);
-	for (int i = sz(v) - 1; i >= 0; i--) {
-		auto [y, oldk] = v[i];
-		if (y > x && dp[x] + w(x, y) < dp[oldk] + w(oldk, y)) 
-			v.pop_back();
-		else {
-			int lo = y+1, hi = N+1;
-			while(lo < hi) {
-				int mid = (lo+hi)/2;
-				if (dp[x] + w(x, mid) <= dp[oldk] + w(oldk, mid))
-					hi = mid;
-				else 
-					lo = mid+1;
+ll w(int l, int r) {
+	return (r - l + 1); // cover all 0 <= l <= r <= n cases
+}
+vector<ll> dp1d1d(int n) {
+	vector<ll> dp(++n, 0ll);
+	vector<pair<int, int>> v = {{0, 0}};
+	rep(x, 1, n) { // find dp[x]
+		auto k = get<1>(*(--lower_bound(all(v), make_pair(x + 1, 0))));
+		dp[x] = dp[k] + w(k, x);
+		for (int i = sz(v) - 1; i >= 0; i--) {
+			auto [y, t] = v[i];
+			if (y > x && dp[x] + w(x, y) < dp[t] + w(t, y)) 
+				v.pop_back();
+			else {
+				int lo = y + 1, hi = n;
+				while(lo < hi) {
+					int mid = (lo + hi)/2;
+					if (dp[x] + w(x, mid) <= dp[t] + w(t, mid))
+						hi = mid;
+					else 
+						lo = mid + 1;
+				}
+				if (hi != n) v.push_back({hi, x});
+				break;
 			}
-			if (hi != N+1) v.push_back({hi, x});
-			break;
 		}
+		if (!sz(v)) v.push_back({0, x});
 	}
-	if (!sz(v)) v.push_back({0, x});
+	return dp;
 }

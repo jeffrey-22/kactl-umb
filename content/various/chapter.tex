@@ -18,6 +18,7 @@
 		Useful for decision points of DP transitions. Consider writing assertions of monotonicity of $\text{opt}$.
 	\kactlimport{KnuthDP.h}
 	\kactlimport{DivideAndConquerDP.h}
+	\vspace{15px}
 	\kactlimport{1D1D.h}
 	\subsection{Sum over Subset}
 		Keep set $S(\text{mask}, i)$ as sum of (subset of first $i$ bits of $\text{mask}$ + remaining bits of $\text{mask}$).
@@ -40,8 +41,9 @@
 		\item \verb@signal(SIGSEGV, [](int) { _Exit(0); });@ converts segfaults into Wrong Answers.
 			Similarly one can catch SIGABRT (assertion failures) and SIGFPE (zero divisions).
 			\verb@_GLIBCXX_DEBUG@ failures generate SIGABRT (or SIGSEGV on gcc 5.4.0 apparently).
+		\item Generator with seed \verb@main(int argc, char* argv[])@ and \verb@srand(atoi(argv[1]))@
+		\item Stress bash \verb@for((i=1;;++i)); do ... done@ and \verb@./gen $i > r diff -w w1 w2 || break@
 	\end{itemize}
-	\kactlimport[-l raw]{stress.sh}
 
 \section{Optimization tricks}
 	\verb@__builtin_ia32_ldmxcsr(40896);@ disables denormals (which make floats 20x slower near their minimum value). Needs 64-bit OS.
