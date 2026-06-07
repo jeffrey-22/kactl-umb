@@ -20,10 +20,10 @@
 	\kactlimport{CRT.h}
 
 	\subsection{Bézout's identity}
-	For $a \neq $, $b \neq 0$, then $d=gcd(a,b)$ is the smallest positive integer for which there are integer solutions to
-	$$ax+by=d$$
-	If $(x,y)$ is one solution, then all solutions are given by
-	$$\left(x+\frac{kb}{\gcd(a,b)}, y-\frac{ka}{\gcd(a,b)}\right), \quad k\in\mathbb{Z}$$
+	For $a \neq 0$ and $b \neq 0$, then integer solutions to $ax+by=c$ exist iff $\gcd(a,b) \mid c$.
+
+	If $(x,y)$ is one solution to $ax+by=\gcd(a,b)$, then all solutions to $ax+by=c$ are given by
+	$$\left(\frac{c}{\gcd(a,b)}x+\frac{b}{\gcd(a,b)}k, \frac{c}{\gcd(a,b)}y-\frac{a}{\gcd(a,b)}k\right), \quad k\in\mathbb{Z}$$
 
 	\kactlimport{phiFunction.h}
 
