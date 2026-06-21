@@ -24,7 +24,7 @@
 	\draw[dotted] (a) to (empty);
 	\draw[dotted] (b) to (empty);
 	\draw[dotted, bend left=8] (bc) to (empty);
-	\draw[dotted, bend right] (ab) to (a);
+	\draw[dotted, bend left=5] (ab) to (b);
 	\draw[dotted] (abc) to (bc);
 	\draw[dotted, bend right=20] (abcb) to (b);
 	\draw[dotted, bend right=20] (abcbc) to (bc);
