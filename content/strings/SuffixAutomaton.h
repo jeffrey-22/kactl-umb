@@ -11,15 +11,19 @@
  * represented by the states, each state representing one or
  * more substrings. Let \texttt{t} the longest string
  * represented by state \texttt{v}. Then \texttt{v.len ==
- * sz(t)}, all strings represented by \texttt{v} only appear in
- * \texttt{s} as a suffix of \texttt{t} and they are the
- * longest suffixes of \texttt{t}. The rest of the suffixes of
- * \texttt{t} are found by following the suffix links
- * \texttt{v.l}. \texttt{p} is the state representing
- * \texttt{s} so terminal states are the ones in the path from
- * \texttt{p} to the root through suffix links. Also suffix
- * links form the suffix tree of reversed \texttt{s}. Here you can see
- * the automaton for abcbc:
+ * sz(t)}, all strings represented by \texttt{v} are suffixes of 
+ * \texttt{t} and they have lengths \texttt{(v.l).len+1, ..., v.len}. 
+ * The rest of the suffixes of \texttt{t} are found by following 
+ * the suffix links \texttt{v.l}. Let \texttt{endpos(v)} set of 
+ * possible endpoints of \texttt{t}'s appearance in \texttt{s}, 
+ * then \texttt{endpos(v)} is a subset of \texttt{endpos(v.l)}.
+ * \texttt{endpos} be reconstructed by adding \texttt{i} to state 
+ * representing \texttt{s[0:i]}, then use DFS to add all 
+ * \texttt{endpos(v)} to \texttt{endpos(v.l)}.
+ * \texttt{p} is the state representing \texttt{s} so terminal
+ * states are the ones in the path from \texttt{p} to the root 
+ * through suffix links. Also suffix links form the suffix tree
+ * of reversed \texttt{s}. Here you can see the automaton for abcbc:
  *
  * \resizebox{\columnwidth}{!}{
  *   \input{content/strings/SuffixAutomaton.tikz}
