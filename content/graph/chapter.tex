@@ -9,11 +9,8 @@
 	\subsection{Edge lower bounds}
 		\begin{itemize}
 		\item Say we require $L(e) \leq f(e) \leq R(e)$ for every edge $e$. 
-		\item If $L(e)$ can be negative:
-			\begin{itemize}
-				\item If $R(e) < 0$, reverse the edge, and flip the signs.
-				\item If $L(e) < 0 \le R(e)$, set $L(e)$ back to $0$, but add a reverse edge with capacity $-L(e)$.
-			\end{itemize}
+		\item If $R(e) < 0$, reverse the edge, and flip the signs.
+		\item If $L(e) < 0 \le R(e)$, set $L(e)$ back to $0$, but add a reverse edge with capacity $-L(e)$.
 		\item Add super source and sink $s'$ and $t'$. 
 		\item Replace edge $a \to b$ with three edges:
 			\begin{itemize}

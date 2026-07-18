@@ -2,7 +2,7 @@
 
 \section{Permutations}
 	\subsection{Factorial}
-		\import{factorial.tex}
+		% \import{factorial.tex}
 		\kactlimport{IntPerm.h}
 
 	\subsection{Cycles}
@@ -27,25 +27,26 @@
 		\[ p(0) = 1,\ p(n) = \sum_{k \in \mathbb Z \setminus \{0\}}{(-1)^{k+1} p(n - k(3k-1) / 2)} \]
 		\[ p(n) \sim 0.145 / n \cdot \exp(2.56 \sqrt{n}) \]
 
-		\begin{center}
-		\begin{tabular}{c|c@{\ }c@{\ }c@{\ }c@{\ }c@{\ }c@{\ }c@{\ }c@{\ }c@{\ }c@{\ }c@{\ }c@{\ }c}
-			$n$    & 0 & 1 & 2 & 3 & 4 & 5 & 6  & 7  & 8  & 9  & 20  & 50  & 100 \\ \hline
-			$p(n)$ & 1 & 1 & 2 & 3 & 5 & 7 & 11 & 15 & 22 & 30 & 627 & $\mathtt{\sim}$2e5 & $\mathtt{\sim}$2e8 \\
-		\end{tabular}
-		\end{center}
+		% \begin{center}
+		% \begin{tabular}{c|c@{\ }c@{\ }c@{\ }c@{\ }c@{\ }c@{\ }c@{\ }c@{\ }c@{\ }c@{\ }c@{\ }c@{\ }c}
+		% 	$n$    & 0 & 1 & 2 & 3 & 4 & 5 & 6  & 7  & 8  & 9  & 20  & 50  & 100 \\ \hline
+		% 	$p(n)$ & 1 & 1 & 2 & 3 & 5 & 7 & 11 & 15 & 22 & 30 & 627 & $\mathtt{\sim}$2e5 & $\mathtt{\sim}$2e8 \\
+		% \end{tabular}
+		% \end{center}
 
-	\subsection{Binomials}
-		\kactlimport{multinomial.h}
+	% \subsection{Binomials}
+	% 	\kactlimport{multinomial.h}
+	
+	\subsection{Inclusion-Exclusion On Subset}
+		Say $f(S)$ is the answer for set $S$. If $g$ is easy to compute, one can recover $f$ with PIE.
 
-	\textbf{Treat} $\binom{<m}{m} = 0$ \textbf{for following theorems.}
+		$$g(S)=\sum_{T:S\subseteq T}f(T) \iff f(S)=\sum_{T:S\subseteq T}(-1)^{|T|-|S|}g(T)$$
+
 	\subsection{Lucas' Theorem}
 		Let $n,m$ be non-negative integers and $p$ a prime. Write $n=n_kp^k+...+n_1p+n_0$ and $m=m_kp^k+...+m_1p+m_0$. Then $\binom{n}{m} \equiv \prod_{i=0}^k\binom{n_i}{m_i} \pmod{p}$.
 
 	\subsection{Hockey-stick Identity}
 		\[ \sum_{n=a}^b \binom{n}{m} = \binom{b+1}{m+1} - \binom{a}{m+1} \]
-
-	\subsection{Every k-th binomial}
-		In the expansion of $(1+x)^n$, plug in various values (including complex values) of $x$ and cancel the terms out by summation.
 
 	\subsection{Vandermonde's Identity}
 		\[ \sum_{k=0}^r \binom{m}{k}\binom{n}{r-k} = \binom{n+m}{r} \]
@@ -67,13 +68,15 @@
 		\normalsize
 
 	\subsection{Stirling numbers of the first kind}
-		Number of permutations on $n$ items with $k$ cycles.
+		Number of permutations on $n$ items with $k$ cycles is $|s(n,k)|$.
 		\begin{align*}
-			&c(n,k) = c(n-1,k-1) + (n-1) c(n-1,k),\ c(0,0) = 1 \\
-			&\textstyle \sum_{k=0}^n c(n,k)x^k = x(x+1) \dots (x+n-1)
+			&s(n,k) = s(n-1,k-1) + (n-1) s(n-1,k),\ s(0,0) = 1 \\
+			&\textstyle (x)_n = x(x-1) \dots (x-n+1) = \sum_{k=0}^n s(n,k)x^k \\
+			&\textstyle x^{(n)} = x(x+1) \dots (x+n-1) = (-1)^n(-x)_n = \sum_{k=0}^n |s(n,k)|x^k
 		\end{align*}
-		$c(8,k) = 8, 0, 5040, 13068, 13132, 6769, 1960, 322, 28, 1$ \\
-		$c(n,2) = 0, 0, 1, 3, 11, 50, 274, 1764, 13068, 109584, \dots$
+		For fixed $n$, divide and conquer and expand $(x)_n$ in $O(n \log^2 n)$. 
+		For single log, note $(x)_{2n}=(x)_n(x-n)_n$, so first find $(x)_n$, use Taylor shift (expand with binomial, identify FFT) for $(x-n)_n$, then multiply them.
+		For fixed $k$, $s(n,k) = [\frac{x^n}{n!}]\frac{\log^k (1+x)}{k!}$.
 
 	\subsection{Eulerian numbers}
 		Number of permutations $\pi \in S_n$ in which exactly $k$ elements are greater than the previous element. $k$ $j$:s s.t. $\pi(j)>\pi(j+1)$, $k+1$ $j$:s s.t. $\pi(j)\geq j$, $k$ $j$:s s.t. $\pi(j)>j$.
@@ -86,6 +89,9 @@
 		$$S(n,k) = S(n-1,k-1) + k S(n-1,k)$$
 		$$S(n,1) = S(n,n) = 1$$
 		$$S(n,k) = \frac{1}{k!}\sum_{j=0}^k (-1)^{k-j}\binom{k}{j}j^n$$
+		$$x^n = \sum_{k=0}^n S(n,k)(x)_k $$
+		For fixed $k$, $S(n,k) = [\frac{x^n}{n!}]\frac{(e^x-1)^k}{k!}$.
+		For fixed $n$, $S(n,k)=\sum_{j=0}^k \frac{(-1)^{k-j}}{(k-j)!} \cdot \frac{j^n}{j!}$ (compute by FFT).
 
 	\subsection{Bell numbers}
 		Total number of partitions of $n$ distinct elements. $B(n) =$
