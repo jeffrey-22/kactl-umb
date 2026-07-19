@@ -30,7 +30,7 @@ struct FT2 {
 	ll query(int x, int y) {
 		ll sum = 0;
 		for (; x; x &= x - 1)
-			sum += ft[x-1].query(ind(x-1, y));
+			sum += ft[x-1].query(ind(x-1, y)-1);
 		return sum;
 	}
 };
