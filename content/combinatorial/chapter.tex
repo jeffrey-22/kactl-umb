@@ -45,6 +45,48 @@
 
 	\subsection{Vandermonde's Identity}
 		\[ \sum_{k=0}^r \binom{m}{k}\binom{n}{r-k} = \binom{n+m}{r} \]
+		
+\section{Generating Functions}
+	OGF of $a_n$ is $A(x)=\sum_{n \ge 0}a_nx^n$. EGF is $\sum_{n \ge 0}\frac{a_n}{n!}x^n$.
+
+	\subsection{Operations and Common Tricks}
+
+	In recurrence equations, multiply a power of $x$ to both sides and summing up for all $n$. 
+
+	Multiply by $n$ ($c_n=na_n$), OGF/EGF: $C(x)=xA'(x)$.
+
+	Shifting $c_n = a_{n-k}$ where $a_{<0}=0$, OGF: $C(x)=x^kA(x)$; EGF: Integrate $k$ times.
+
+	Shifting $c_n = a_{n+k}$, OGF: $C(x)=\frac{A(x)-(a_0+a_1x+\ldots+a_{k-1}x^{k-1})}{x^k}$; EGF: Differentiate $k$ times.
+
+	Power of $k$, $C(x) = A(x)^k$, OGF: $c_n=\sum_{i_1+\ldots+i_k=n}a_{i_1}\cdots a_{i_k}$; 
+	EGF: $c_n=\sum_{i_1+\ldots+i_k=n}\frac{n!}{i_1!\cdots i_k!}a_{i_1}\cdots a_{i_k}$
+
+	If $a_n=$ number of ways to make a single component using $n$ labelled items and has EGF $A(x)$, then number of ways to make several unordered components using $n$ items has EGF $e^{A(x)}$. (Fix number of components to be $k$, then it's $\frac{A(x)^k}{k!}$)
+
+	Prefix Sum Trick, OGF only: $c_n = a_0+\ldots+a_n$, $C(x)=\frac{1}{1-x}A(x)$.
+
+	Newton's Method: to solve $F(Q(x))=0$ for some poly-valued function $F$, $Q_{k+1}=Q_k-\frac{F(Q_k)}{F'(Q_k)} \mod x^{2^{k+1}}$.
+
+	Reciprocal of $A(x)$ is $Q(x)$: (if division by zero is an issue, multiply both sides of the fraction by something first) let $F(Q)=\frac{1}{Q}-A$, then $Q_{k+1}=Q_k(2-AQ_k) \mod x^{2^{k+1}}$. Require $[x^0]A(x) \neq 0$.
+
+	Logarithm: $(\ln A(x))'=\frac{A'(x)}{A(x)}$, integrate both sides. Usually require $[x^0]A(x)=1$.
+
+	Exponent: let $F(Q)=\ln Q-A$, then $Q_{k+1}=Q_k(1+A-\ln Q_k) \mod x^{2^{k+1}}$. Usually require $[x^0]A(x)=0$.
+
+	\subsection{Useful Equations and Applications}
+
+	$$ \frac{1}{1-x} = 1+x+x^2+\ldots = \sum_{n \ge 0} x^n \ ;\ \frac{1}{(1-x)^k} = \sum_{n \ge 0} \binom{n+k-1}{n} x^n $$
+
+	For different $x_i$, (expand $H(t)=\frac{1}{(1-x_1 t)\cdots (1-x_n t)}$)
+
+	$$ \sum_{a_1+\ldots+a_n=m} \Pi_{i=1}^n x_i ^ {a_i} = \sum_{i=1}^n \frac{x_i ^ {n+m-1}}{\Pi_{j \neq i} (x_i-x_j)} $$
+
+	$\sum_{i \bmod m = r}\binom{n}{i}=[x^0]F(x)$, where $F(x)=x^{m-r}(1+x)^n$ modulo $x^m-1$ ($x^m=1$, $x^{m+1}=x$, \ldots) can be found in $O(m^2 \log n)$ using binary exponentiation and multiplying polys naively.
+
+	Partition of $n$ to odd parts = Partition to distinct parts
+
+	$P[$stopping time $= k] = \sum P[$got to stopping state in $i$ moves$]\cdot P[$stay at stopping state in $k-i$ moves$]$
 
 \section{General purpose numbers}
 	\subsection{Bernoulli numbers}
@@ -77,11 +119,11 @@
 		$|s(8,k)| = 8, 0, 5040, 13068, 13132, 6769, 1960, 322, 28, 1$ \\
 		$|s(n,2)| = 0, 0, 1, 3, 11, 50, 274, 1764, 13068, 109584, \dots$
 
-	% \subsection{Eulerian numbers}
-	% 	Number of permutations $\pi \in S_n$ in which exactly $k$ elements are greater than the previous element. $k$ $j$:s s.t. $\pi(j)>\pi(j+1)$, $k+1$ $j$:s s.t. $\pi(j)\geq j$, $k$ $j$:s s.t. $\pi(j)>j$.
-	% 	$$E(n,k) = (n-k)E(n-1,k-1) + (k+1)E(n-1,k)$$
-	% 	$$E(n,0) = E(n,n-1) = 1$$
-	% 	$$E(n,k) = \sum_{j=0}^k(-1)^j\binom{n+1}{j}(k+1-j)^n$$
+	\subsection{Eulerian numbers}
+		Number of permutations $\pi \in S_n$ in which exactly $k$ elements are greater than the previous element. $k$ $j$:s s.t. $\pi(j)>\pi(j+1)$, $k+1$ $j$:s s.t. $\pi(j)\geq j$, $k$ $j$:s s.t. $\pi(j)>j$.
+		$$E(n,k) = (n-k)E(n-1,k-1) + (k+1)E(n-1,k)$$
+		$$E(n,0) = E(n,n-1) = 1$$
+		$$E(n,k) = \sum_{j=0}^k(-1)^j\binom{n+1}{j}(k+1-j)^n$$
 
 	\subsection{Stirling numbers of the second kind}
 		Partitions of $n$ distinct elements into exactly $k$ groups.
@@ -92,6 +134,7 @@
 	
 	\subsection{Subset Inversion}
 		$f(S)$ is the answer for set $S$. $g$ is easy to compute $\implies$ recover $f$ with PIE. 
+		Can also change summmation to $T:T\subseteq S$.
 
 		$$g(S)=\sum_{T:S\subseteq T}f(T) \iff f(S)=\sum_{T:S\subseteq T}(-1)^{|T|-|S|}g(T)$$
 
