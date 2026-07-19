@@ -19,8 +19,8 @@ struct Mod {
 	Mod operator*(Mod b) { return Mod((x * b.x) % mod); }
 	Mod operator/(Mod b) { return *this * invert(b); }
 	static Mod invert(Mod a) {
-        assert(a.x != 0);
-        return Mod(a.x) ^ (mod - 2);
+		assert(a.x != 0);
+		return Mod(a.x) ^ (mod - 2);
 		//ll x, y, g = euclid(a.x, mod, x, y);
 		//assert(g == 1); return Mod((x + mod) % mod);
 	}
