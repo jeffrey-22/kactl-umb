@@ -105,47 +105,43 @@ struct SegTreeBeats {
 		build(t << 1 | 1, tm + 1, tr);
 		pushup(t);
 	}
-	void update_add(int l, int r, ll v, int t = 1, int tl = a, int tr = b) {
+	void update_add(int l,int r,ll v,int t=1,int tl=a,int tr=b){
 		if (r < tl || tr < l) return;
 		if (l <= tl && tr <= r) {
 			pushadd(t, tl, tr, v);
 			return;
 		}
-		pushdown(t, tl, tr);
-		int tm = (tl + tr) >> 1;
+		pushdown(t, tl, tr); int tm = (tl + tr) >> 1;
 		update_add(l, r, v, t << 1, tl, tm);
 		update_add(l, r, v, t << 1 | 1, tm + 1, tr);
 		pushup(t);
 	}
-	void update_chmin(int l, int r, ll v, int t = 1, int tl = a, int tr = b) {
+	void update_chmin(int l,int r,ll v,int t=1,int tl=a,int tr=b){
 		if (r < tl || tr < l || v >= T[t].max1) return;
 		if (l <= tl && tr <= r && v > T[t].max2) {
 			pushmax(t, v, tl == tr);
 			return;
 		}
-		pushdown(t, tl, tr);
-		int tm = (tl + tr) >> 1;
+		pushdown(t, tl, tr); int tm = (tl + tr) >> 1;
 		update_chmin(l, r, v, t << 1, tl, tm);
 		update_chmin(l, r, v, t << 1 | 1, tm + 1, tr);
 		pushup(t);
 	}
-	void update_chmax(int l, int r, ll v, int t = 1, int tl = a, int tr = b) {
+	void update_chmax(int l,int r,ll v,int t=1,int tl=a,int tr=b){
 		if (r < tl || tr < l || v <= T[t].min1) return;
 		if (l <= tl && tr <= r && v < T[t].min2) {
 			pushmin(t, v, tl == tr);
 			return;
 		}
-		pushdown(t, tl, tr);
-		int tm = (tl + tr) >> 1;
+		pushdown(t, tl, tr); int tm = (tl + tr) >> 1;
 		update_chmax(l, r, v, t << 1, tl, tm);
 		update_chmax(l, r, v, t << 1 | 1, tm + 1, tr);
 		pushup(t);
 	}
-	ll query_sum(int l, int r, int t = 1, int tl = a, int tr = b) {
+	ll query_sum(int l,int r,int t=1,int tl=a,int tr=b){
 		if (r < tl || tr < l) { return 0; }
 		if (l <= tl && tr <= r) { return T[t].sum; }
-		pushdown(t, tl, tr);
-		int tm = (tl + tr) >> 1;
+		pushdown(t, tl, tr); int tm = (tl + tr) >> 1;
 		return query_sum(l, r, t << 1, tl, tm) + query_sum(l, r, t << 1 | 1, tm + 1, tr);
 	}
 };
