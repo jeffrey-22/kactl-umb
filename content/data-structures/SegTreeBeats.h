@@ -97,8 +97,7 @@ struct SegTreeBeats {
 		if (tl == tr) {
 			T[t].sum = T[t].max1 = T[t].min1 = 0; // or arr[tl]
 			T[t].maxc = T[t].minc = 1;
-			T[t].max2 = -inf;
-			T[t].min2 = inf;
+			T[t].max2 = -inf; T[t].min2 = inf;
 			return;
 		}
 		int tm = (tl + tr) >> 1;
