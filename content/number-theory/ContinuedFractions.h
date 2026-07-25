@@ -10,6 +10,11 @@
  * ($p_k/q_k$ alternates between $>x$ and $<x$.)
  * If $x$ is rational, $y$ eventually becomes $\infty$;
  * if $x$ is the root of a degree $2$ polynomial the $a$'s eventually become cyclic.
+ * 
+ * Continued fraction $[a_0;a_1,\ldots,a_k]=a_0+\frac{1}{a_1+\frac{1}{\ldots}}$.
+ * 
+ * Rational have unique continued fraction expression if we force $a_k = 1$. $k = O(\log \min(p,q))$ for rational $\frac{p}{q}$.
+ * 
  * Time: O(\log N)
  * Status: stress-tested for n <= 300
  */
@@ -21,6 +26,7 @@ pair<ll, ll> approximate(d x, ll N) {
 		ll lim = min(P ? (N-LP) / P : inf, Q ? (N-LQ) / Q : inf),
 		   a = (ll)floor(y), b = min(a, lim),
 		   NP = b*P + LP, NQ = b*Q + LQ;
+		   // Push "a" into vector for continued fraction expression of x = [a0;a1,...]
 		if (a > b) {
 			// If b > a/2, we have a semi-convergent that gives us a
 			// better approximation; if b = a/2, we *may* have one.
