@@ -10,10 +10,14 @@ int main() {
         for (int q = 0; q < 5000; q++) {
             int L = rand() % n + 1, R = rand() % n + 1; if (L > R) swap(L, R);
             ll val = rand() % 100 + 1;
-            int type = rand() % 2 + 1;
+            int type = rand() % 3 + 1;
             if (type == 1) {
                 T.update_add(L, R, Lazy(val));
                 for (int i = L; i <= R; i++) a[i] += val;
+            }
+            else if (type == 2) {
+                if (rand() % 2 == 1) swap(L, R);
+                T.point_modify(L, Sum(val)); a[L] = val;
             }
             else {
                 ll sa = 0;
