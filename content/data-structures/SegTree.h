@@ -64,6 +64,16 @@ struct SegTree {
 		update_add(l, r, v, t << 1 | 1, tm + 1, tr);
 		pushup(t);
 	}
+	void point_modify(int pos,Sum new_val,int t=1,int tl=a,int tr=b){
+		if (tl == tr) {
+			T[t].sum = new_val;
+			return;
+		}
+		pushdown(t, tl, tr); int tm = (tl + tr) >> 1;
+		if (pos <= tm) point_modify(pos, new_val, t << 1, tl, tm);
+		else point_modify(pos, new_val, t << 1 | 1, tm + 1, tr);
+		pushup(t);
+	}
 	Sum query_sum(int l,int r,int t=1,int tl=a,int tr=b){
 		if (l <= tl && tr <= r) { return T[t].sum; }
 		pushdown(t, tl, tr); int tm = (tl + tr) >> 1;
