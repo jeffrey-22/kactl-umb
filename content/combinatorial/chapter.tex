@@ -25,7 +25,7 @@
 	\subsection{Partition function}
 		Number of ways of writing $n$ as a sum of positive integers, disregarding the order of the summands.
 		\[ p(0) = 1,\ p(n) = \sum_{k \in \mathbb Z \setminus \{0\}}{(-1)^{k+1} p(n - k(3k-1) / 2)} \]
-		\[ p(n) \sim 0.145 / n \cdot \exp(2.56 \sqrt{n}) \]
+		% \[ p(n) \sim 0.145 / n \cdot \exp(2.56 \sqrt{n}) \]
 
 		% \begin{center}
 		% \begin{tabular}{c|c@{\ }c@{\ }c@{\ }c@{\ }c@{\ }c@{\ }c@{\ }c@{\ }c@{\ }c@{\ }c@{\ }c@{\ }c}
@@ -42,6 +42,10 @@
 
 	\subsection{Hockey-stick Identity}
 		\[ \sum_{n=a}^b \binom{n}{m} = \binom{b+1}{m+1} - \binom{a}{m+1} \]
+		
+		Let $f_z=\sum_{i=0}^x \binom{ki+y}{z}$ for fixed $x, y, k$, can compute $f_i$ for all $i \leq m$ in $O(km)$ time using recurrence ($f_0=x+1$):
+
+		$$ f_z = \frac{1}{k}(\binom{k(x+1)+y}{z+1} - \binom{y}{z+1} - \sum_{j=2}^{\min(k,z+1)} \binom{k}{j} f_{z-j+1}) $$
 
 	\subsection{Vandermonde's Identity}
 		\[ \sum_{k=0}^r \binom{m}{k}\binom{n}{r-k} = \binom{n+m}{r} \]
@@ -80,7 +84,9 @@
 
 	$$ \frac{1}{1-x} = 1+x+x^2+\ldots = \sum_{n \ge 0} x^n \ ;\ \frac{1}{(1-x)^k} = \sum_{n \ge 0} \binom{n+k-1}{n} x^n $$
 
-	For different $x_i$, (expand $H(t)=\frac{1}{(1-x_1 t)\cdots (1-x_n t)}$)
+	For different $x_i$: (expand $H(t)=\frac{1}{(1-x_1 t)\cdots (1-x_n t)}$)
+
+	\newpage
 
 	$$ \sum_{a_1+\ldots+a_n=m} \Pi_{i=1}^n x_i ^ {a_i} = \sum_{i=1}^n \frac{x_i ^ {n+m-1}}{\Pi_{j \neq i} (x_i-x_j)} $$
 
