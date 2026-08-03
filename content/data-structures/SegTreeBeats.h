@@ -8,82 +8,58 @@
  * Status: not tested
  */
 struct SegTreeBeats {
+	#define PU pushup(t)
+	#define PD pushdown(t, tl, tr)
+	#define TM int tm=(tl+tr)/2
+	#define LR int L=t<<1,R=L|1
+	#define DJ r < tl || tr < l
+	#define SBS l <= tl && tr <= r
+	#define LC l, r, v, L, tl, tm
+	#define RC l, r, v, R, tm + 1, tr	
 	struct Node {
 		ll sum, max1, max2, // Sum, Max, Second Max
 		maxc, min1, min2, minc, lazy; // Max val cnt, Min, Lazy tag
 	};
 	vector<Node> T; 
-	inline static int a = 0, b = 0; // all instances share this index range [a, b]. If this is not desirable, also remove all the default tl = a, tr = b
+	inline static int a=0, b=0; // all instances share this index range [a, b]. If this is not desirable, also remove all the default tl = a, tr = b
 	const ll inf = 9e18;
-	SegTreeBeats(int n) : T(4*n+10) {a = 1, b = n; build();}
+	SegTreeBeats(int n) : T(4*n+10) {a=1, b=n; build();}
 	void pushup(int t) {
-		int L = (t << 1), R = (t << 1 | 1);
-		T[t].sum = T[L].sum + T[R].sum; // sum
-		if (T[L].max1 == T[R].max1) { // max
-			T[t].max1 = T[L].max1;
-			T[t].max2 = max(T[L].max2, T[R].max2);
-			T[t].maxc = T[L].maxc + T[R].maxc;
-		} else {
-			if (T[L].max1 > T[R].max1) {
-				T[t].max1 = T[L].max1;
-				T[t].max2 = max(T[L].max2, T[R].max1);
-				T[t].maxc = T[L].maxc;
-			} else {
-				T[t].max1 = T[R].max1;
-				T[t].max2 = max(T[L].max1, T[R].max2);
-				T[t].maxc = T[R].maxc;
-			}
-		}
-		if (T[L].min1 == T[R].min1) { // min
-			T[t].min1 = T[L].min1;
-			T[t].min2 = min(T[L].min2, T[R].min2);
-			T[t].minc = T[L].minc + T[R].minc;
-		} else {
-			if (T[L].min1 < T[R].min1) {
-				T[t].min1 = T[L].min1;
-				T[t].min2 = min(T[L].min2, T[R].min1);
-				T[t].minc = T[L].minc;
-			} else {
-				T[t].min1 = T[R].min1;
-				T[t].min2 = min(T[L].min1, T[R].min2);
-				T[t].minc = T[R].minc;
-			}
-		}
+		LR; auto &x=T[t];
+		x.sum=T[L].sum+T[R].sum; // sum
+		if(T[L].max1<T[R].max1)swap(L,R); // max
+		x.max1=T[L].max1;
+		x.maxc=T[L].max1==T[R].max1?T[L].maxc+T[R].maxc:T[L].maxc;
+		x.max2=T[L].max1==T[R].max1?max(T[L].max2,T[R].max2):max(T[L].max2,T[R].max1);
+		if(T[L].min1>T[R].min1)swap(L,R); // min
+		x.min1=T[L].min1;
+		x.minc=T[L].min1==T[R].min1?T[L].minc+T[R].minc:T[L].minc;
+		x.min2=T[L].min1==T[R].min1?min(T[L].min2,T[R].min2):min(T[L].min2,T[R].min1);
 	}
 	void pushadd(int t, int tl, int tr, ll v) {
-		if (v == 0) return;
-		T[t].sum += v * (tr - tl + 1);
-		T[t].max1 += v;
-		if (T[t].max2 != -inf) T[t].max2 += v;
-		T[t].min1 += v;
-		if (T[t].min2 != inf) T[t].min2 += v;
-		T[t].lazy += v;
+		auto &x=T[t]; if (v==0) return;
+		x.sum+=v*(tr - tl + 1); x.lazy += v;
+		x.max1+=v; x.max2+=(x.max2!=-inf)?v:0;	
+		x.min1+=v; x.min2+=(x.min2!=inf)?v:0;
 	}
 	void pushmax(int t, ll v, bool l) {
-		if (v >= T[t].max1) return;
-		T[t].sum -= T[t].max1 * T[t].maxc;
-		T[t].max1 = v;
-		T[t].sum += T[t].max1 * T[t].maxc;
-		if (l) T[t].min1 = T[t].max1;
-		else {
-			if (v <= T[t].min1) T[t].min1 = v;
-			else if (v < T[t].min2) T[t].min2 = v;
+		auto &x=T[t]; if (v>=x.max1) return;
+		x.sum+=(v-x.max1)*x.maxc; x.max1=v;
+		if (l) x.min1 = x.max1; else {
+			if (v<=x.min1) x.min1=v;
+			else x.min2=min(v,x.min2);
 		}
 	}
 	void pushmin(int t, ll v, bool l) {
-		if (v <= T[t].min1) return;
-		T[t].sum -= T[t].min1 * T[t].minc;
-		T[t].min1 = v;
-		T[t].sum += T[t].min1 * T[t].minc;
-		if (l) T[t].max1 = T[t].min1;
-		else {
-			if (v >= T[t].max1) T[t].max1 = v;
-			else if (v > T[t].max2) T[t].max2 = v;
+		auto &x=T[t]; if (v<=x.min1) return;
+		x.sum+=(v-x.min1)*x.minc; x.min1=v;
+		if (l) x.max1 = x.min1;	else {
+			if (v>=x.max1) x.max1 = v;
+			else x.max2=max(v,x.max2);
 		}
 	}
 	void pushdown(int t, int tl, int tr) {
-		if (tl == tr) return;
-		int tm = (tl + tr) >> 1, L = (t << 1), R = (t << 1 | 1);
+		if (tl == tr) return; TM; LR;
 		pushadd(L, tl, tm, T[t].lazy); // sum
 		pushadd(R, tm + 1, tr, T[t].lazy);
 		T[t].lazy = 0;
@@ -100,48 +76,24 @@ struct SegTreeBeats {
 			T[t].max2 = -inf; T[t].min2 = inf;
 			return;
 		}
-		int tm = (tl + tr) >> 1;
-		build(t << 1, tl, tm);
-		build(t << 1 | 1, tm + 1, tr);
-		pushup(t);
+		TM; LR;	build(L, tl, tm); build(R, tm + 1, tr); PU;
 	}
 	void update_add(int l,int r,ll v,int t=1,int tl=a,int tr=b){
-		if (r < tl || tr < l) return;
-		if (l <= tl && tr <= r) {
-			pushadd(t, tl, tr, v);
-			return;
-		}
-		pushdown(t, tl, tr); int tm = (tl + tr) >> 1;
-		update_add(l, r, v, t << 1, tl, tm);
-		update_add(l, r, v, t << 1 | 1, tm + 1, tr);
-		pushup(t);
+		if(DJ)return;if(SBS){pushadd(t, tl, tr, v);return;}
+		PD;TM;LR;update_add(LC);update_add(RC);PU;
 	}
 	void update_chmin(int l,int r,ll v,int t=1,int tl=a,int tr=b){
-		if (r < tl || tr < l || v >= T[t].max1) return;
-		if (l <= tl && tr <= r && v > T[t].max2) {
-			pushmax(t, v, tl == tr);
-			return;
-		}
-		pushdown(t, tl, tr); int tm = (tl + tr) >> 1;
-		update_chmin(l, r, v, t << 1, tl, tm);
-		update_chmin(l, r, v, t << 1 | 1, tm + 1, tr);
-		pushup(t);
+		if(DJ||v>=T[t].max1)return;
+		if(SBS&&v>T[t].max2){pushmax(t, v, tl == tr);return;}
+		PD;TM;LR;update_chmin(LC);update_chmin(RC);PU;
 	}
 	void update_chmax(int l,int r,ll v,int t=1,int tl=a,int tr=b){
-		if (r < tl || tr < l || v <= T[t].min1) return;
-		if (l <= tl && tr <= r && v < T[t].min2) {
-			pushmin(t, v, tl == tr);
-			return;
-		}
-		pushdown(t, tl, tr); int tm = (tl + tr) >> 1;
-		update_chmax(l, r, v, t << 1, tl, tm);
-		update_chmax(l, r, v, t << 1 | 1, tm + 1, tr);
-		pushup(t);
+		if(DJ||v<=T[t].min1)return;
+		if(SBS&&v<T[t].min2){pushmin(t, v, tl == tr);return;}
+		PD;TM;LR;update_chmax(LC);update_chmax(RC);PU;
 	}
 	ll query_sum(int l,int r,int t=1,int tl=a,int tr=b){
-		if (r < tl || tr < l) { return 0; }
-		if (l <= tl && tr <= r) { return T[t].sum; }
-		pushdown(t, tl, tr); int tm = (tl + tr) >> 1;
-		return query_sum(l, r, t << 1, tl, tm) + query_sum(l, r, t << 1 | 1, tm + 1, tr);
+		if(DJ)return 0;if(SBS)return T[t].sum;PD;TM;LR;
+		return query_sum(l,r,L,tl,tm)+query_sum(l,r,R,tm+1,tr);
 	}
 };
