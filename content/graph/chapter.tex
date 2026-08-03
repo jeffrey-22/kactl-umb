@@ -54,6 +54,8 @@
 	\kactlimport{LinkCutTree.h}
 	\kactlimport{DirectedMST.h}
 
+\newpage
+
 \section{Math}
 	\subsection{Number of Spanning Trees}
 		% I.e. matrix-tree theorem.
@@ -63,7 +65,7 @@
 		\texttt{mat[a][b]--, mat[b][b]++} (and \texttt{mat[b][a]--, mat[a][a]++} if $G$ is undirected).
 		Remove the $i$th row and column and take the determinant; this yields the number of directed spanning trees rooted at $i$
 		(if $G$ is undirected, remove any row/column).
-		\vspace{25px}
+		% \vspace{25px}
 
 	\subsection{Erdős–Gallai theorem}
 		% Source: https://en.wikipedia.org/wiki/Erd%C5%91s%E2%80%93Gallai_theorem
