@@ -21,6 +21,8 @@
 	\kactlimport{DivideAndConquerDP.h}
 	% \vspace{15px}
 	\kactlimport{1D1D.h}
+	\kactlimport{MinPlusConcave.h}
+	\kactlimport{MinPlusConvex.h}
 	\subsection{Sum over Subset}
 
 		Keep set $S(\text{mask}, i)$ as sum of (subset of first $i$ bits of $\text{mask}$ + remaining bits of $\text{mask}$).
@@ -36,9 +38,9 @@
 
 		To find if a subset sum of weights can be equal to $k$, group items into form $(w_i, occ_i)$, and decompose into powers of $2$. So $(w_i,12)=\{w_i,2w_i,4w_i,5w_i\}$. This is $O(\frac{C^{1.5}}{32})$.
 
-	\subsection{(min, +) convolution}
+	% \subsection{(min, +) convolution}
 
-		Find $C_i = \max_{x+y=i} (A_x + B_y)$. If both $A$ and $B$ are convex, then consider the union of the slopes of $A$ and $B$, sort them to get the slopes of $C$. If only $B$ is convex, define $i$-chain as the line segment with points $\{(i+1,A_i+B_1),(i+2,A_i+B_2),(i+3,Ai+B3),\cdots \}$. 2 chains only intersect at a point, so use Li Chao tree to store these lines.
+	% 	Find $C_i = \max_{x+y=i} (A_x + B_y)$. If both $A$ and $B$ are convex, then consider the union of the slopes of $A$ and $B$, sort them to get the slopes of $C$. If only $B$ is convex, define $i$-chain as the line segment with points $\{(i+1,A_i+B_1),(i+2,A_i+B_2),(i+3,Ai+B3),\cdots \}$. 2 chains only intersect at a point, so use Li Chao tree to store these lines.
 
 	\subsection{$O(nk)$ tree DP}
 
