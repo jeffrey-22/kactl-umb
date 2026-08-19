@@ -28,7 +28,7 @@ int main() {
         Poly a4 = Log(Exp(a, n + 1), n);
         assert(sz(a) == sz(a2) && sz(a) == sz(a3) && sz(a) == sz(a4));
         for (int i = 0; i < sz(a); i++) assert(a[i].x == a2[i].x && a[i].x == a3[i].x && a[i].x == a4[i].x);
-        vector<Num> res = MultiEval(a, b);
+        vector<Num> res = MultipointEvaluate(a, b);
         assert(sz(res) == sz(b));
         for (int i = 0; i < m; i++) {
             Num naiveres = Num(0);
@@ -46,7 +46,7 @@ int main() {
                 if (!same) break; b[i] = Num(rand() % mod);
             }
         }
-        Poly a5 = Interpolate(b, MultiEval(a, b));
+        Poly a5 = Interpolate(b, MultipointEvaluate(a, b));
         assert(sz(a5) == sz(a));
         for (int i = 0; i < sz(a); i++) assert(a[i].x == a5[i].x);
     }
