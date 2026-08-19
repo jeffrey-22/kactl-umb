@@ -3,7 +3,7 @@
 #include "../../content/number-theory/ModularArithmetic.h"
 
 int main() {
-	rep(a,0,mod) rep(b,1,mod) {
+	rep(a,0,1000) rep(b,1,1000) {
 		Mod ma(a);
 		Mod mb(b);
 		Mod mc = ma / mb;

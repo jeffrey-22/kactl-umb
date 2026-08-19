@@ -8,7 +8,7 @@
  */
 #pragma once
 
-const ll mod = 1000000007; // faster if const
+#include "ModularArithmetic.h"
 
 ll modpow(ll b, ll e) {
 	ll ans = 1;

@@ -10,7 +10,7 @@
 
 #include "euclid.h"
 
-const ll mod = 17; // change to something else
+const ll mod = 998244353; // change to something else
 struct Mod {
 	ll x;
 	Mod(ll xx) : x(xx) {}
