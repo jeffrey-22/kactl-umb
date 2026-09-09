@@ -1,8 +1,9 @@
 /**
- * Author: Andrew He
- * Source: github.com/ecnerwala/icpc-book/blob/master/content/numerical/fft.cpp
+ * Author: Me
+ * Source: GPT
  * Date: 2026-08-18
- * Description: Polynomial class "For integers rounding works if $(|a| + |b|)\max(a, b) < \mathtt{\sim} 10^9$, or in theory maybe $10^6$"
+ * Status: stress-tested
+ * Description: Modular polynomial class.
  */
 
 #include "../number-theory/ModularArithmetic.h"

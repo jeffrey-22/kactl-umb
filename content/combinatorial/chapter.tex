@@ -57,7 +57,7 @@
 
 	In recurrence equations, multiply a power of $x$ to both sides and summing up for all $n$. 
 
-	Multiply by $n$ ($c_n=na_n$), OGF/EGF: $C(x)=xA'(x)$.
+	% Multiply by $n$ ($c_n=na_n$), OGF/EGF: $C(x)=xA'(x)$.
 
 	Shifting $c_n = a_{n-k}$ where $a_{<0}=0$, OGF: $C(x)=x^kA(x)$; EGF: Integrate $k$ times.
 
@@ -72,13 +72,13 @@
 
 	Prefix Sum Trick, OGF only: $c_n = a_0+\ldots+a_n$, $C(x)=\frac{1}{1-x}A(x)$.
 
-	Newton's Method: to solve $F(Q(x))=0$ for some poly-valued function $F$, $Q_{k+1}=Q_k-\frac{F(Q_k)}{F'(Q_k)} \mod x^{2^{k+1}}$.
+	% Newton's Method: to solve $F(Q(x))=0$ for some poly-valued function $F$, $Q_{k+1}=Q_k-\frac{F(Q_k)}{F'(Q_k)} \mod x^{2^{k+1}}$.
 
-	Reciprocal of $A(x)$ is $Q(x)$: (if division by zero is an issue, multiply both sides of the fraction by something first) let $F(Q)=\frac{1}{Q}-A$, then $Q_{k+1}=Q_k(2-AQ_k) \mod x^{2^{k+1}}$. Require $[x^0]A(x) \neq 0$.
+	% Reciprocal of $A(x)$ is $Q(x)$: (if division by zero is an issue, multiply both sides of the fraction by something first) let $F(Q)=\frac{1}{Q}-A$, then $Q_{k+1}=Q_k(2-AQ_k) \mod x^{2^{k+1}}$. Require $[x^0]A(x) \neq 0$.
 
-	Logarithm: $(\ln A(x))'=\frac{A'(x)}{A(x)}$, integrate both sides. Usually require $[x^0]A(x)=1$.
+	% Logarithm: $(\ln A(x))'=\frac{A'(x)}{A(x)}$, integrate both sides. Usually require $[x^0]A(x)=1$.
 
-	Exponent: let $F(Q)=\ln Q-A$, then $Q_{k+1}=Q_k(1+A-\ln Q_k) \mod x^{2^{k+1}}$. Usually require $[x^0]A(x)=0$.
+	% Exponent: let $F(Q)=\ln Q-A$, then $Q_{k+1}=Q_k(1+A-\ln Q_k) \mod x^{2^{k+1}}$. Usually require $[x^0]A(x)=0$.
 
 	\subsection{Useful Equations and Applications}
 
