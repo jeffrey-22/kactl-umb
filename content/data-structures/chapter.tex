@@ -15,4 +15,16 @@
 \kactlimport{FenwickTree2d.h}
 \kactlimport{RMQ.h}
 \kactlimport{MoQueries.h}
+
+Sum of first $k$ row lengths of Young Tableau = max size of $k$ disjoint weakly increasing subseq = 
+length of longest subseq whose longest strictly decreasing subseq has length $\leq$ k. 
+
+First $k$ cols = $k$ disjoint strictly decreasing subseq =
+subseq whose longest weakly increasing subseq has length $\leq$ k.
+
+Hook-Length formula: \# of Young Tableaus with same shape is $\frac{n!}{\Pi h(x,y)}$ 
+where $h(x,y)$ is the \# of squares directly below or to the right of square $(x,y)$.
+
+\columnbreak
+
 \kactlimport{YoungTableau.h}

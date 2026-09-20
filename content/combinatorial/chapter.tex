@@ -49,6 +49,8 @@
 
 	\subsection{Vandermonde's Identity}
 		\[ \sum_{k=0}^r \binom{m}{k}\binom{n}{r-k} = \binom{n+m}{r} \]
+
+\columnbreak
 		
 \section{Generating Functions}
 	OGF of $a_n$ is $A(x)=\sum_{n \ge 0}a_nx^n$. EGF is $\sum_{n \ge 0}\frac{a_n}{n!}x^n$.
@@ -94,6 +96,8 @@
 
 	$P[$stopping time $= k] = \sum P[$got to stopping state in $i$ moves$]\cdot P[$stay at stopping state in $k-i$ moves$]$
 
+\columnbreak
+
 \section{General purpose numbers}
 	\subsection{Bernoulli numbers}
 		EGF of Bernoulli numbers is $B(t)=\frac{t}{e^t-1}$ (FFT-able).
@@ -137,6 +141,8 @@
 		$$S(n,k) = \frac{1}{k!}\sum_{j=0}^k (-1)^{k-j}\binom{k}{j}j^n,\ x^n = \sum_{k=0}^n S(n,k)(x)_k $$
 		For fixed $k$, $S(n,k) = [\frac{x^n}{n!}]\frac{(e^x-1)^k}{k!}$.
 		For fixed $n$, $S(n,k)=\sum_{j=0}^k \frac{(-1)^{k-j}}{(k-j)!} \cdot \frac{j^n}{j!}$ (compute by FFT).
+
+\columnbreak
 	
 	\subsection{Subset Inversion}
 		$f(S)$ is the answer for set $S$. $g$ is easy to compute $\implies$ recover $f$ with PIE. 
@@ -176,3 +182,5 @@
 			\item ways a convex polygon with $n+2$ sides can be cut into triangles by connecting vertices with straight lines.
 			\item permutations of $[n]$ with no 3-term increasing subseq.
 		\end{itemize}
+
+\columnbreak

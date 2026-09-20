@@ -5,17 +5,7 @@
  * Description: Builds a table of a sequence where both rows and columns are increasing. 
  * In case of equal elements, rows are weakly increasing but columns are strongly increasing.
  * Transposing is equal to the Young Tableau of the reverse of the sequence (after forcing strictRow).
- * Sum of first $k$ rows = max size of $k$ disjoint weakly increasing subseq = 
- * longest subseq whose longest strictly decreasing subseq has length $\leq$ k. 
- * Sum of first $k$ cols = max size of $k$ disjoint strictkly decreasing subseq =
- * longest subseq whose longest weakly increasing subseq has length $\leq$ k.
  * RSKMap maps any permutation to a pair $(P,Q)$ and RSKInverse maps it back.
- * Number of odd columns is equal to the number of $i$s that satisfy $a_i=i$ for involution $a$ ($a_{a_i}=i$).
- * Hook-Length formula: \# of Young Tableaus with same shape is $\frac{n!}{\Pi h(x,y)}$
- * where $h(x,y)$ is the \# of squares directly below or to the right of square $(x,y)$.
- * Define comparison on pair $(x,y)$ as first compare $x$ then $y$.
- * Compute $(P,Q)$: inserting $y$ in order of $x$ to get $P$, and record $x$ at inserted position to get $Q$.
- * If reverse every pair to $(y,x)$ and first compare $y$ then x, then it will correspond to $(Q,P)$.
  * Time: $O(NK \log N)$ for buildFirstKRows, $O(N^{1.5} \log N)$ for RSKMap, $O(N^2 \log N)$ for RSKInverse.
  * Status: stress-tested
  */

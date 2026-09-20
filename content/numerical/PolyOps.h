@@ -19,10 +19,9 @@ Poly Multiply(Poly a, Poly b) {
 	return c;
 }
 Poly Reciprocal(Poly a, int n) { // compute first n coeffs
-	if (!sz(a) || !n) return {};
-	Poly b({Num(1)/a[0]});
+	if (!sz(a) || !n) return {}; Poly b({Num(1)/a[0]});
 	while (sz(b) < n) {
-        int m = min(2 * sz(b), n);
+		int m = min(2 * sz(b), n);
 		Poly f(a.begin(), a.begin() + min(m, sz(a)));
 		Poly c = Multiply(f, b); c.resize(m, Num(0));
 		rep(i,0,m) c[i] = Num(0) - c[i]; c[0] = c[0] + Num(2);
@@ -31,25 +30,20 @@ Poly Reciprocal(Poly a, int n) { // compute first n coeffs
 	return b;
 }
 Poly Differentiate(Poly a) {
-	if (!sz(a)) return {};
-	Poly b(sz(a)-1, Num(0));
-	rep(i,1,sz(a)) b[i-1]=a[i]*Num(i);
-	return b;
+	if (!sz(a)) return {}; Poly b(sz(a)-1, Num(0));
+	rep(i,1,sz(a)) b[i-1]=a[i]*Num(i); return b;
 }
 Poly Integrate(Poly a) { // assumes C = 0
 	Poly b(sz(a)+1, Num(0));
-	rep(i,0,sz(a)) b[i+1]=a[i]/Num(i+1);
-	return b;
+	rep(i,0,sz(a)) b[i+1]=a[i]/Num(i+1); return b;
 }
 Poly Log(Poly a, int n) { // a[0]=1 must hold
-    if (!n) return {};
+	if (!n) return {};
 	Poly b = Integrate(Multiply(Differentiate(a),Reciprocal(a,n-1)));
-	b.resize(n, Num(0));
-	return b;
+	b.resize(n, Num(0)); return b;
 }
 Poly Exp(Poly a, int n) { // a[0]=0 must hold
-    if (!n) return {};
-	Poly b = {Num(1)};
+	if (!n) return {}; Poly b = {Num(1)};
 	while (sz(b) < n) {
 		int m = min(2 * sz(b), n);
 		Poly d = Log(b, m); Poly c(m, Num(0));
@@ -60,14 +54,12 @@ Poly Exp(Poly a, int n) { // a[0]=0 must hold
 	return b;
 }
 Poly Remainder(Poly a, Poly b) {
-	if (sz(a) < sz(b)) return a;
-	if (!sz(b)) return {};
+	if (sz(a) < sz(b)) return a; if (!sz(b)) return {};
 	int n = sz(a) - sz(b) + 1;
 	Poly c(a.rbegin(), a.rend()), d(b.rbegin(), b.rend());
 	d = Reciprocal(d, n);
 	Poly q = Multiply(c, d); q.resize(n, Num(0));
-	reverse(all(q));
-	Poly p = Multiply(q, b);
+	reverse(all(q)); Poly p = Multiply(q, b);
 	rep(i,0,sz(p)) a[i] = a[i] - p[i];
 	a.resize(sz(b) - 1, Num(0));
 	return a;
@@ -88,7 +80,7 @@ vector<Num> MultipointEvaluate(Poly a, vector<Num> x) {
 	rep(i,S,S+n) c.push_back(r[i].empty() ? Num(0) : r[i][0]);
 	return c;
 }
-Poly Interpolate(vector<Num> x, vector<Num> y) { // x is distinct
+Poly Interpolate(vector<Num> x, vector<Num> y) {
 	int n = sz(x); assert(n == sz(y) && n);
 	int S = 1 << (32 - __builtin_clz(n - 1));
 	vector<Poly> t(2 * S, {Num(1)}), c(2 * S);
@@ -102,8 +94,8 @@ Poly Interpolate(vector<Num> x, vector<Num> y) { // x is distinct
 		Poly a = Multiply(c[2 * v], t[2 * v + 1]);
 		Poly b = Multiply(c[2 * v + 1], t[2 * v]);
 		c[v].assign(max(sz(a), sz(b)), Num(0));
-		rep(i, 0, sz(a)) c[v][i] = c[v][i] + a[i];
-		rep(i, 0, sz(b)) c[v][i] = c[v][i] + b[i];
+		rep(i,0,sz(a)) c[v][i] = c[v][i] + a[i];
+		rep(i,0,sz(b)) c[v][i] = c[v][i] + b[i];
 	}
 	c[1].resize(n, Num(0));
 	return c[1];
