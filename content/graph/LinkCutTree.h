@@ -2,9 +2,10 @@
  * Author: Simon Lindholm
  * Date: 2016-07-25
  * Source: https://github.com/ngthanhtrung23/ACM_Notebook_new/blob/master/DataStructure/LinkCutTree.h
- * Description: Represents a forest of unrooted trees. You can add and remove
+ * Description: Represents a forest of rooted trees. You can add and remove
  * edges (as long as the result is still a forest), and check whether
- * two nodes are in the same tree.
+ * two nodes are in the same tree. Each tree is divided into several paths, 
+ * and all vertices on each path is put into an aux splay tree in ascending order of depth.
  * Time: All operations take amortized O(\log N).
  * Status: Stress-tested a bit for N <= 20
  */
@@ -78,7 +79,7 @@ struct LinkCut {
 		Node* nu = access(&node[u])->first();
 		return nu == access(&node[v])->first();
 	}
-	void makeRoot(Node* u) { /// Move u to root of represented tree.
+	void makeRoot(Node* u) { // Make u the root of represented tree.
 		access(u);
 		u->splay();
 		if(u->c[0]) {
@@ -89,7 +90,7 @@ struct LinkCut {
 			u->fix();
 		}
 	}
-	Node* access(Node* u) { /// Move u to root aux tree. Return the root of the root aux tree.
+	Node* access(Node* u) { // Flip paths to make u and root be in the same aux tree. Return the root of the root aux tree.
 		u->splay();
 		while (Node* pp = u->pp) {
 			pp->splay(); u->pp = 0;

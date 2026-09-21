@@ -7,6 +7,9 @@
  * so that an expression of the type $(a||b)\&\&(!a||c)\&\&(d||!b)\&\&...$
  * becomes true, or reports that it is unsatisfiable.
  * Negated variables are represented by bit-inversions (\texttt{\tilde{}x}).
+ * A directed edge means implication, and a graph is solvable iff $x$ and $!x$ are not in the same SCC.
+ * With constraints like $\min(x_i,x_j) \leq w$, make vertex representing $x_i \leq w$.
+ * Sort values on same variables and add edges as necessary.
  * Usage:
  *  TwoSat ts(number of boolean variables);
  *  ts.either(0, \tilde3); // Var 0 is true or var 3 is false
