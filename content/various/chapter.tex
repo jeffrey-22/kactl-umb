@@ -57,6 +57,10 @@
 
 		Consider items adding to an array one by one (in some order). The array will look like some connected components of values, like $[2, ?, 1, ?, ?, 3, 4]$. When exact items inside each connected component don't matter: can let $dp[i][j][k]$ be the answer for inserting first $i$ items, resulting in $j$ connected components, with $k$ ends of the array being filled ($0 \leq k \leq 2$). Adding an item either combines two components, or create a new component, or extend an existing component.
 
+	\subsection{Product Trick}
+
+		When the problem says "the score of an array is the product of its elements, find the sum of the scores over all the possible arrays" - This is equivalent to number of ways to color exactly one ball red for each box, where the $i$-th box contains $a_i$ balls. Then, you can think that during the process of generating the array, you can put either red balls or normal balls, and you want to count how many ways there are such that each box ends up with exactly one ball. This can usually be represented as a DP: $dp[i][j]$ means after step $i$, exactly $j$ boxes have a red ball (while the remaining $n-j$ boxes have no red balls yet). Transition by iterating over the number of red balls $k$ that we put in step $i$: $dp[i - 1][j - k] \to dp[i][j]$.
+
 \clearpage
 
 \section{Game Theory}
