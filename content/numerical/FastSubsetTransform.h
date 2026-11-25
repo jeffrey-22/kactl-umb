@@ -6,7 +6,7 @@
  * Description: Transform to a basis with fast convolutions of the form
  * $\displaystyle c[z] = \sum\nolimits_{z = x \oplus y} a[x] \cdot b[y]$,
  * where $\oplus$ is one of AND, OR, XOR. The size of $a$ must be a power of two.
- * WH Transform is \hat{f}(x)=\sum\nolimits_{y}(-1)^<y,x>f(y).
+ * WH Transform is $\displaystyle\hat{f}(x)=\sum\nolimits_{y}(-1)^{<y,x>}f(y)$.
  * Time: O(N \log N)
  * Status: stress-tested
  */
